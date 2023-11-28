@@ -21,3 +21,10 @@ class Migration(migrations.Migration):
 
 
 
+import phonenumbers
+x = phonenumbers.parse("+44(208)366 1177", RU)
+y = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
+print(x)
+print(y)
+
+'+442083661177'
