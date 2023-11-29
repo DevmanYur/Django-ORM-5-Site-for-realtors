@@ -4,11 +4,14 @@ from django.db import migrations
 import phonenumbers
 
 
-def upd_new_building(apps, schema_editor):
+def upd_new_owner_pure_phone(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    Flat.objects.filter(construction_year__gte=2015).update(new_building=True)
-    Flat.objects.filter(construction_year__lt=2015).update(new_building=False)
-
+    Flats = Flat.objects.all()
+    for Select_flat in Flats:
+        parse_phone = phonenumbers.parse(Select_flat.owners_phonenumber, "RU")
+        format_phone = phonenumbers.format_number(parse_phone, phonenumbers.PhoneNumberFormat.E164)
+        Select_flat.owner_pure_phone = format_phone
+        Select_flat.save()
 
 class Migration(migrations.Migration):
 
@@ -16,15 +19,6 @@ class Migration(migrations.Migration):
         ('property', '0011_auto_20231124_1556'),
     ]
 
-    operations = [migrations.RunPython(upd_new_building),
+    operations = [migrations.RunPython(upd_new_owner_pure_phone),
     ]
 
-
-
-import phonenumbers
-x = phonenumbers.parse("+44(208)366 1177", RU)
-y = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
-print(x)
-print(y)
-
-'+442083661177'
