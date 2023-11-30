@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Flat, Claim
+from .models import Flat, Claim, Owner
 
 class FlatAdmin(admin.ModelAdmin):
     search_fields = ('town', 'town_district', 'address',)
@@ -14,8 +14,14 @@ class FlatAdmin(admin.ModelAdmin):
 class ClaimAdmin(admin.ModelAdmin):
     raw_id_fields = ('author','flat',)
 
+class OwnerAdmin(admin.ModelAdmin):
+    search_fields = ('owner','owner_pure_phone',)
+    list_display = ('owner', 'owner_pure_phone',)
+    raw_id_fields = ('owner_flat',)
+
 admin.site.register(Flat, FlatAdmin)
 admin.site.register(Claim, ClaimAdmin)
+admin.site.register(Owner, OwnerAdmin)
 
 
 
