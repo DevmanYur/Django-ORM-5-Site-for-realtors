@@ -6,7 +6,7 @@ import phonenumbers
 
 def upd_new_owner_pure_phone(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    Flats = Flat.objects.all()
+    Flats = Flat.objects.filter(owners_phonenumber='+70000000000')
     for Select_flat in Flats:
         parse_phone = phonenumbers.parse(Select_flat.owners_phonenumber, "RU")
         format_phone = phonenumbers.format_number(parse_phone, phonenumbers.PhoneNumberFormat.E164)
